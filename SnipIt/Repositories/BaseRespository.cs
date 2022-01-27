@@ -1,7 +1,7 @@
 ﻿using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 
-namespace SnipIt.Repositories
+namespace CodeSnipIt.Repositories
 {
     public abstract class BaseRepository
     {
