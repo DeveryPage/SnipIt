@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using SnipIt.Models;
-using SnipIt.Repositories;
+using CodeSnipIt.Models;
+using CodeSnipIt.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
-namespace SnipIt.Controllers
+namespace CodeSnipIt.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

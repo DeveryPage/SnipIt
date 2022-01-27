@@ -9,13 +9,13 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using SnipIt.Repositories;
+using CodeSnipIt.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace SnipIt
+namespace CodeSnipIt
 {
     public class Startup
     {
@@ -31,6 +31,7 @@ namespace SnipIt
         {
 
             services.AddTransient<IUserProfileRepository, UserProfileRepository>();
+            services.AddTransient<ISnipItRepository, SnipItRepository>();
 
             // JWT TOKENS
             var firebaseProjectId = Configuration.GetValue<string>("FirebaseProjectId");
@@ -85,7 +86,7 @@ namespace SnipIt
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "SnipIt v1"));
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "CodeSnipIt v1"));
             }
 
             app.UseHttpsRedirection();
