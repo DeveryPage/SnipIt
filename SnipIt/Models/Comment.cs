@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace SnipIt.Models
+namespace CodeSnipIt.Models
 {
     public class Comment
     {

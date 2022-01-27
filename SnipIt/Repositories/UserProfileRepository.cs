@@ -1,13 +1,13 @@
 ﻿using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
-using SnipIt.Models;
+using CodeSnipIt.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Tabloid.Utils;
 
-namespace SnipIt.Repositories
+namespace CodeSnipIt.Repositories
 {
     public class UserProfileRepository : BaseRepository, IUserProfileRepository
     {

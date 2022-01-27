@@ -1,6 +1,6 @@
 using System;
 
-namespace SnipIt
+namespace CodeSnipIt
 {
     public class WeatherForecast
     {

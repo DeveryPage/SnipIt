@@ -27,10 +27,10 @@ insert into UserProfile (Id, DisplayName, Email, CreateDateTime, IsActive, Fireb
 set identity_insert [UserProfile] off
 
 set identity_insert [SnipIt] on
-insert into Snipit (Id, Title, Caption, SnipIt, CreateDateTime, LanguageId, UserProfileId) values (1, 'morph front-end markets', 'Integer ac leo. Pellentesque ultrices mattis odio. Donec vitae nisi.',  'Integer ac leo. Pellentesque ultrices mattis odio. Donec vitae nisi.', '2019-12-04', 1, 1);
-insert into SnipIt (Id, Title, Caption, SnipIt, CreateDateTime, LanguageId, UserProfileId) values (2, 'orchestrate value-added communities',  'Integer ac leo. Pellentesque ultrices mattis odio. Donec vitae nisi.',  'Integer ac leo. Pellentesque ultrices mattis odio. Donec vitae nisi.', '2019-08-01', 1, 1);
-insert into SnipIt (Id, Title, Caption, SnipIt, CreateDateTime, LanguageId, UserProfileId) values (3, 'orchestrate value-added communities',  'Integer ac leo. Pellentesque ultrices mattis odio. Donec vitae nisi.',  'Integer ac leo. Pellentesque ultrices mattis odio. Donec vitae nisi.', '2019-08-01', 1, 1);
-insert into SnipIt (Id, Title, Caption, SnipIt, CreateDateTime, LanguageId, UserProfileId) values (3, 'orchestrate value-added communities',  'Integer ac leo. Pellentesque ultrices mattis odio. Donec vitae nisi.',  'Integer ac leo. Pellentesque ultrices mattis odio. Donec vitae nisi.', '2019-08-01', 1, 1);
+insert into Snipit (Id, Title, Caption, Snip, CreateDateTime, LanguageId, UserProfileId) values (1, 'morph front-end markets', 'Integer ac leo. Pellentesque ultrices mattis odio. Donec vitae nisi.',  'Integer ac leo. Pellentesque ultrices mattis odio. Donec vitae nisi.', '2019-12-04', 1, 1);
+insert into SnipIt (Id, Title, Caption, Snip, CreateDateTime, LanguageId, UserProfileId) values (2, 'orchestrate value-added communities',  'Integer ac leo. Pellentesque ultrices mattis odio. Donec vitae nisi.',  'Integer ac leo. Pellentesque ultrices mattis odio. Donec vitae nisi.', '2019-08-01', 1, 1);
+insert into SnipIt (Id, Title, Caption, Snip, CreateDateTime, LanguageId, UserProfileId) values (3, 'orchestrate value-added communities',  'Integer ac leo. Pellentesque ultrices mattis odio. Donec vitae nisi.',  'Integer ac leo. Pellentesque ultrices mattis odio. Donec vitae nisi.', '2019-08-01', 1, 1);
+insert into SnipIt (Id, Title, Caption, Snip, CreateDateTime, LanguageId, UserProfileId) values (3, 'orchestrate value-added communities',  'Integer ac leo. Pellentesque ultrices mattis odio. Donec vitae nisi.',  'Integer ac leo. Pellentesque ultrices mattis odio. Donec vitae nisi.', '2019-08-01', 1, 1);
 set identity_insert [Post] off
 
 set identity_insert [Comment] on

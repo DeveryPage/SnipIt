@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace CodeSnipIt.Repositories
 {
-    public class LanguageRepository
+    public interface ISnipItTagRepository
     {
     }
 }

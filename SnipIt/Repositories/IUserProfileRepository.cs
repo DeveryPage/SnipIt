@@ -1,7 +1,7 @@
-﻿using SnipIt.Models;
+﻿using CodeSnipIt.Models;
 using System.Collections.Generic;
 
-namespace SnipIt.Repositories
+namespace CodeSnipIt.Repositories
 {
     public interface IUserProfileRepository
     {

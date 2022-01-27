@@ -12,7 +12,7 @@ CREATE TABLE [SnipIt] (
   [Id] int PRIMARY KEY IDENTITY(1, 1),
   [Title] nvarchar(255) NOT NULL,
   [Caption] nvarchar(255),
-  [SnipIt] nvarchar(255) NOT NULL,
+  [Snip] nvarchar(255) NOT NULL,
   [LanguageId] int,
   [UserProfileId] int NOT NULL,
   [CreateDateTime] datetime NOT NULL
