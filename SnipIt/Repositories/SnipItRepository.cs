@@ -61,5 +61,27 @@ namespace CodeSnipIt.Repositories
             }
         }
 
+        public void Add(SnipIt snipit)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"Insert Into SnipIt (Title, Caption, Snip, LanguageId,
+					                                        UserProfileId, CreateDateTime)
+                                        OutPut Inserted.Id
+                                        Values (@Title, @Caption, @Snip, @LanguageId, @UserProfileId, SysDateTime())";
+                    DbUtils.AddParameter(cmd, "@Title", snipit.Title);
+                    DbUtils.AddParameter(cmd, "@Content", snipit.Caption);
+                    DbUtils.AddParameter(cmd, "@Snip", snipit.Snip);
+                    DbUtils.AddParameter(cmd, "@CategoryId", snipit.LanguageId);
+                    DbUtils.AddParameter(cmd, "@UserProfileId", snipit.UserProfileId);
+
+                    snipit.Id = (int)cmd.ExecuteScalar();
+                }
+            }
+        }
+
     }
 }

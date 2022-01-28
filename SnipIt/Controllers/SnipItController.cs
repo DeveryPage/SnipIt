@@ -1,8 +1,11 @@
-﻿using CodeSnipIt.Repositories;
+﻿using CodeSnipIt.Models;
+using CodeSnipIt.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -41,8 +44,24 @@ namespace CodeSnipIt.Controllers
 
         // POST api/<SnipItController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        [Authorize]
+        public IActionResult Post(SnipIt snipit)
         {
+            if(string.IsNullOrWhiteSpace(snipit.Title))
+            {
+                snipit.Title = null;
+                return NoContent();
+            }
+
+            var userId = GetCurrentUserProfileId();
+            if (userId.HasValue)
+            {
+                snipit.UserProfileId = (int)userId;
+                _snipRepo.Add(snipit);
+
+                return CreatedAtAction("Get", new { id = snipit.Id }, snipit);
+            }
+            return StatusCode(403);
         }
 
         // PUT api/<SnipItController>/5
@@ -55,6 +74,22 @@ namespace CodeSnipIt.Controllers
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
+        }
+
+
+        private int? GetCurrentUserProfileId()
+        {
+            var claim = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier);
+            if (claim != null)
+            {
+                var user = _upRepo.GetByFirebaseUserId(claim.Value);
+                if (user != null)
+                {
+                    return user.Id;
+                }
+                return null;
+            }
+            return null;
         }
     }
 }

@@ -6,5 +6,7 @@ namespace CodeSnipIt.Repositories
     public interface ISnipItRepository
     {
         List<SnipIt> GetAllSnipIts();
+
+        void Add(SnipIt snipit);
     }
 }
