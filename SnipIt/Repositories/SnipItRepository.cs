@@ -74,9 +74,9 @@ namespace CodeSnipIt.Repositories
                                         OutPut Inserted.Id
                                         Values (@Title, @Caption, @Snip, @LanguageId, @UserProfileId, SysDateTime())";
                     DbUtils.AddParameter(cmd, "@Title", snipit.Title);
-                    DbUtils.AddParameter(cmd, "@Content", snipit.Caption);
+                    DbUtils.AddParameter(cmd, "@Caption", snipit.Caption);
                     DbUtils.AddParameter(cmd, "@Snip", snipit.Snip);
-                    DbUtils.AddParameter(cmd, "@CategoryId", snipit.LanguageId);
+                    DbUtils.AddParameter(cmd, "@LanguageId", snipit.LanguageId);
                     DbUtils.AddParameter(cmd, "@UserProfileId", snipit.UserProfileId);
 
                     snipit.Id = (int)cmd.ExecuteScalar();
