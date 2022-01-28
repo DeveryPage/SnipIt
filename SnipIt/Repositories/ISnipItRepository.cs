@@ -8,5 +8,8 @@ namespace CodeSnipIt.Repositories
         List<SnipIt> GetAllSnipIts();
 
         void Add(SnipIt snipit);
+
+        void Delete(int snipitId);
+
     }
 }

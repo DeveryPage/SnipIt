@@ -61,6 +61,7 @@ namespace CodeSnipIt.Repositories
             }
         }
 
+
         public void Add(SnipIt snipit)
         {
             using (var conn = Connection)
@@ -83,5 +84,21 @@ namespace CodeSnipIt.Repositories
             }
         }
 
+        public void Delete(int snipitId) 
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"Delete From SnipIt
+		                                Where Id = @id";
+
+                    DbUtils.AddParameter(cmd, "@id", snipitId);
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
     }
 }
