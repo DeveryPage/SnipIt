@@ -18,3 +18,14 @@ export const getAllSnipIts = () => {
         });
     });
 };
+
+export const deleteSnipIt = (snipit) => {
+    return getToken().then((token) => {
+        return fetch(`${baseUrl}/${snipit.id}`, {
+            method: "DELETE",
+            headers: {
+                Authorization: `Bearer ${token}`
+            },
+        })
+    })
+}

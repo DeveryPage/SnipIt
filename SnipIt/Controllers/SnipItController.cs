@@ -1,4 +1,5 @@
 ﻿using CodeSnipIt.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -32,12 +33,6 @@ namespace CodeSnipIt.Controllers
             return Ok(_snipRepo.GetAllSnipIts());
         }
 
-        // GET api/<SnipItController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
 
         // POST api/<SnipItController>
         [HttpPost]
@@ -53,8 +48,11 @@ namespace CodeSnipIt.Controllers
 
         // DELETE api/<SnipItController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        [Authorize]
+        public IActionResult Delete(int id)
         {
+            _snipRepo.Delete(id);
+            return NoContent();
         }
     }
 }
