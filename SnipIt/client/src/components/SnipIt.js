@@ -19,11 +19,20 @@ export const SnipIt = ({ snipit, setSnipIts }) => {
             return;
         }
     }
+
+    const handleClickEditSnip = () => {
+        history.push(`/snipit/create/${snipit.id}`)
+    }
+
     return (
-        <Card >
+        <>
+            <h3>Snip: {snipit.snip}</h3>
+            <h4>Language: {snipit.language.name}</h4>
             <p className="text-left px-2"> Posted by: {snipit.userprofile.displayName} </p>
-            <p>{snipit.caption}</p>
+            <p>caption: {snipit.caption}</p>
+
             <button onClick={handleClickDeleteSnipIt}>Delete</button>
-        </Card>
+            <button onClick={handleClickEditSnip}>Edit</button>
+        </>
     )
 }

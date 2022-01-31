@@ -42,7 +42,7 @@ export default function Header({ isLoggedIn }) {
 
                         {isLoggedIn &&
                             <NavItem>
-                                <NavLink tag={RRNavLink} to="/snipit">New SnipIt</NavLink>
+                                <NavLink tag={RRNavLink} to="/snipit/create">New SnipIt</NavLink>
                             </NavItem>
                         }
 
