@@ -29,3 +29,42 @@ export const deleteSnipIt = (snipit) => {
         })
     })
 }
+
+export const getSnipIt = (id) => {
+    return getToken().then((token) => {
+        return fetch(`${baseUrl}/${id}`, {
+            method: "GET",
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        }).then((res) => res.json())
+    })
+}
+
+
+
+export const updateSnipIt = (snipit) => {
+    return getToken().then((token) => {
+        return fetch(`${baseUrl}/${snipit.id}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`
+            },
+            body: JSON.stringify(snipit),
+        }).then(getAllSnipIts());
+    })
+}
+
+export const addSnipIt = (snipit) => {
+    return getToken().then((token) => {
+        return fetch(baseUrl, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify(snipit),
+        }).then(res => res.json());
+    })
+}

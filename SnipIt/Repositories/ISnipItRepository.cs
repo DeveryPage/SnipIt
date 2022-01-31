@@ -11,5 +11,6 @@ namespace CodeSnipIt.Repositories
 
         void Delete(int snipitId);
 
+        void Update(SnipIt snipit);
     }
 }

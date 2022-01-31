@@ -60,8 +60,16 @@ namespace CodeSnipIt.Controllers
 
         // PUT api/<SnipItController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [Authorize]
+        public IActionResult Put(int id, SnipIt snipit)
         {
+            if (id != snipit.Id)
+            {
+                return BadRequest();
+            }
+
+            _snipRepo.Update(snipit);
+            return NoContent();
         }
 
         // DELETE api/<SnipItController>/5

@@ -3,6 +3,7 @@ import { Switch, Route, Redirect } from "react-router-dom";
 import Login from "./Login";
 import Register from "./Register";
 import SnipItList from "./SnipItList";
+import SnipItForm from "./SnipItForm";
 
 
 const ApplicationViews = ({ isLoggedIn }) => {
@@ -10,7 +11,15 @@ const ApplicationViews = ({ isLoggedIn }) => {
         <Switch>
             <Route path="/" exact>
                 {isLoggedIn ? <SnipItList /> : <Redirect to="/login" />}
+            </Route>
 
+            <Route path="/snipit/create" exact>
+                {isLoggedIn ? <SnipItForm /> : <Redirect to="/login" />}
+            </Route>
+
+
+            <Route path="/snipit/create/:id" exact>
+                {isLoggedIn ? <SnipItForm /> : <Redirect to="/login" />}
             </Route>
 
 

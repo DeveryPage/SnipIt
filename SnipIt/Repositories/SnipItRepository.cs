@@ -100,5 +100,27 @@ namespace CodeSnipIt.Repositories
                 }
             }
         }
+
+        public void Update(SnipIt snipit)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"Update SnipIt
+                                        set Title = @Title, Caption = @Caption,
+	                                        Snip = @Snip, LanguageId = @LanguageId
+                                        Where Id = @Id";
+                    cmd.Parameters.AddWithValue("@Id", snipit.Id);
+                    cmd.Parameters.AddWithValue("@Title", snipit.Title);
+                    cmd.Parameters.AddWithValue("@Caption", snipit.Caption);
+                    cmd.Parameters.AddWithValue("@Snip", snipit.Snip);
+                    cmd.Parameters.AddWithValue("@LanguageId", snipit.LanguageId);
+
+                    cmd.ExecuteReader();
+                }
+            }
+        }
     }
 }
