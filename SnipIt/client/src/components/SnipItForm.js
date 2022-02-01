@@ -1,7 +1,7 @@
 import React from "react";
 import { useHistory, useParams } from "react-router";
 import { Container } from "reactstrap";
-import { addSnipIt, getSnipIt, updateSnipIt } from "../modules/snipItManager";
+import { addSnipIt, deleteSnipIt, getSnipIt, updateSnipIt } from "../modules/snipItManager";
 import { useState } from "react";
 
 const SnipItForm = () => {
@@ -16,7 +16,11 @@ const SnipItForm = () => {
 
     if (snipitId.id && snipit.title === "") {
         getSnipIt(snipitId.id)
-            .then(snipit => setSnipit(snipit));
+            .then(snipit => {
+                const snipitCopy = { ...snipit }
+                delete snipitCopy.userprofile
+                setSnipit(snipitCopy)
+            });
     }
 
     const handleInput = (event) => {
@@ -46,16 +50,16 @@ const SnipItForm = () => {
                 <div className="form-group">
                     <form>
                         <label htmlFor="title">Title</label>
-                        <input type="text" className="form-control" id="title" placeholder="Title" onChange={handleInput} required />
+                        <input type="text" className="form-control" id="title" placeholder="Title" value={snipit.title} onChange={handleInput} required />
 
                         <label htmlFor="caption">Caption</label>
-                        <input type="text" className="form-control" id="caption" placeholder="Caption" onChange={handleInput} required />
+                        <input type="text" className="form-control" id="caption" placeholder="Caption" value={snipit.caption} onChange={handleInput} required />
 
                         <label htmlFor="snip">Snip</label>
-                        <input type="text" className="form-control" id="snip" placeholder="Snip" onChange={handleInput} required />
+                        <textarea type="text" className="form-control" id="snip" placeholder="Snip" value={snipit.snip} onChange={handleInput} required />
 
                         <label htmlFor="languageId">Language</label>
-                        <input type="text" className="form-control" id="languageId" placeholder="languageId" onChange={handleInput} required />
+                        <input type="text" className="form-control" id="languageId" placeholder="languageId" value={snipit.languageId} onChange={handleInput} required />
                     </form>
                 </div>
                 {snipitId.id ?
