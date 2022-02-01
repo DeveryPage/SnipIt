@@ -35,6 +35,18 @@ namespace CodeSnipIt.Controllers
             return Ok(_snipRepo.GetAllSnipIts());
         }
 
+        [HttpGet("{id}")]
+        [Authorize]
+        public IActionResult GetSnipIt(int id)
+        {
+            var snipit = _snipRepo.GetSnipItById(id);
+            if (snipit == null)
+            {
+                return NotFound();
+            }
+            return Ok(snipit);
+        }
+
 
         // POST api/<SnipItController>
         [HttpPost]

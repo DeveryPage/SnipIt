@@ -26,7 +26,8 @@ export const SnipIt = ({ snipit, setSnipIts }) => {
 
     return (
         <>
-            <h3>Snip: {snipit.snip}</h3>
+            <h3>{snipit.title}</h3>
+            <h3>Snip: </h3><textarea value={snipit.snip} readOnly></textarea>
             <h4>Language: {snipit.language.name}</h4>
             <p className="text-left px-2"> Posted by: {snipit.userprofile.displayName} </p>
             <p>caption: {snipit.caption}</p>

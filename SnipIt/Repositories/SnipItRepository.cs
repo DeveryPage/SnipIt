@@ -110,15 +110,61 @@ namespace CodeSnipIt.Repositories
                 {
                     cmd.CommandText = @"Update SnipIt
                                         set Title = @Title, Caption = @Caption,
-	                                        Snip = @Snip, LanguageId = @LanguageId
+	                                        Snip = @Snip
                                         Where Id = @Id";
                     cmd.Parameters.AddWithValue("@Id", snipit.Id);
                     cmd.Parameters.AddWithValue("@Title", snipit.Title);
                     cmd.Parameters.AddWithValue("@Caption", snipit.Caption);
                     cmd.Parameters.AddWithValue("@Snip", snipit.Snip);
-                    cmd.Parameters.AddWithValue("@LanguageId", snipit.LanguageId);
 
                     cmd.ExecuteReader();
+                }
+            }
+        }
+
+        public SnipIt GetSnipItById(int id)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using(var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"Select  s.Id, s.Title, s.Caption, s.Snip,
+		                                        s.LanguageId, s.UserProfileId,
+
+		                                        l.Name, up.DisplayName
+                                        From SnipIt s
+                                        join UserProfile up on s.UserProfileId = up.Id 
+                                        join Language l on s.LanguageId = l.Id
+                                        Where s.id = @Id";
+                    DbUtils.AddParameter(cmd, "@Id", id);
+
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        SnipIt snipit = null;
+                        if(reader.Read())
+                        {
+                            snipit = new SnipIt()
+                            {
+                                Id = id,
+                                Title = DbUtils.GetString(reader, "Title"),
+                                Caption = DbUtils.GetString(reader, "Caption"),
+                                Snip = DbUtils.GetString(reader, "Snip"),
+
+                                Language = new Language()
+                                {
+                                    Name = DbUtils.GetString(reader, "Name")
+                                },
+
+                                Userprofile = new UserProfile()
+                                {
+                                    DisplayName = DbUtils.GetString(reader, "DisplayName")
+                                }
+
+                            };
+                        }
+                        return snipit;
+                    }
                 }
             }
         }
