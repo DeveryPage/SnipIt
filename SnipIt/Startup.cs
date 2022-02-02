@@ -32,6 +32,7 @@ namespace CodeSnipIt
 
             services.AddTransient<IUserProfileRepository, UserProfileRepository>();
             services.AddTransient<ISnipItRepository, SnipItRepository>();
+            services.AddTransient<ILanguageRepository, LanguageRepository>();
 
             // JWT TOKENS
             var firebaseProjectId = Configuration.GetValue<string>("FirebaseProjectId");

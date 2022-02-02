@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, CardBody } from "reactstrap";
+import { Button, Card, CardBody, CardSubtitle, CardText, CardTitle, Col, Row } from "reactstrap";
 import { Link } from "react-router-dom";
 import { deleteSnipIt, getAllSnipIts } from "../modules/snipItManager";
 import { useHistory } from "react-router";
@@ -26,14 +26,28 @@ export const SnipIt = ({ snipit, setSnipIts }) => {
 
     return (
         <>
-            <h3>{snipit.title}</h3>
-            <h3>Snip: </h3><textarea value={snipit.snip} readOnly></textarea>
-            <h4>Language: {snipit.language.name}</h4>
-            <p className="text-left px-2"> Posted by: {snipit.userprofile.displayName} </p>
-            <p>caption: {snipit.caption}</p>
+            <div>
+                <Card body color="light">
+                    <CardBody>
+                        <CardSubtitle className="mb-2 text-muted" tag="h6">
+                            Author: {snipit.userprofile.displayName} | | Language: {snipit.language.name}
+                        </CardSubtitle>
+                        <CardTitle tag="h5" >{snipit.title}</CardTitle>
+                        <CardSubtitle className="mb-2 text-muted" tag="h6">{snipit.caption}</CardSubtitle>
+                        <CardText>{snipit.snip}</CardText>
 
-            <button onClick={handleClickDeleteSnipIt}>Delete</button>
-            <button onClick={handleClickEditSnip}>Edit</button>
+                        <Row >
+                            <Col xs="1">
+                                <Button onClick={handleClickEditSnip}>Edit</Button>
+                            </Col>
+
+                            <Col xs="1">
+                                <Button onClick={handleClickDeleteSnipIt}>Delete</Button>
+                            </Col>
+                        </Row>
+                    </CardBody>
+                </Card>
+            </div>
         </>
     )
 }
