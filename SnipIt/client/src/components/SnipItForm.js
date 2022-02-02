@@ -1,8 +1,10 @@
 import React from "react";
 import { useHistory, useParams } from "react-router";
-import { Container, FormGroup, Form, Label, Input, Col, Row, Button } from "reactstrap";
+import { Container, FormGroup, Form, Label, Input, Col, Row, Button, Select } from "reactstrap";
 import { addSnipIt, deleteSnipIt, getSnipIt, updateSnipIt } from "../modules/snipItManager";
 import { useState } from "react";
+import { getAllLanguages } from "../modules/languageManager";
+import { useEffect } from "react";
 
 const SnipItForm = () => {
 
@@ -10,9 +12,23 @@ const SnipItForm = () => {
         title: "",
     })
 
+
+
+    const [languages, setLanguages] = useState([])
+
     const snipitId = useParams();
 
     const history = useHistory();
+
+    const getLanguages = () => {
+        getAllLanguages().then(languages => setLanguages(languages))
+    }
+
+    useEffect(() => {
+        getLanguages();
+    }, []);
+
+
 
     if (snipitId.id && snipit.title === "") {
         getSnipIt(snipitId.id)
@@ -76,7 +92,12 @@ const SnipItForm = () => {
                                     </Col>
 
                                     <Label htmlFor="languageId">Language</Label>
-                                    <Input type="text" className="form-control" id="languageId" placeholder="languageId" value={snipit.languageId} onChange={handleInput} required />
+                                    <select className="form-control" id="languageId" value={snipit.languageId} onChange={handleInput} required>
+                                        <option value="0">Select a Language</option>
+                                        {languages.map(l => (
+                                            <option key={l.id} value={l.id}>{l.name}</option>
+                                        ))}
+                                    </select>
                                 </Col>
                             </Row>
                         </FormGroup>

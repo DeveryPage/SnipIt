@@ -72,6 +72,7 @@ namespace CodeSnipIt.Repositories
 
                     cmd.Parameters.AddWithValue("@Name", language.Name);
                     cmd.Parameters.AddWithValue("@Id", language.Id);
+
                     cmd.ExecuteNonQuery();
                 }
             }
