@@ -18,7 +18,7 @@ const SnipItList = () => {
             <div className="row justify-content-center">
                 {snipits.map((snipit) => (
                     <>
-                        <SnipIt snipit={snipit} key={snipit.id} />
+                        <SnipIt snipit={snipit} key={snipit.id} setSnipIts={setSnipIts} />
 
                     </>
                 ))}

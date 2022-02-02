@@ -8,7 +8,11 @@ import {
     NavbarBrand,
     Nav,
     NavItem,
-    NavLink
+    NavLink,
+    UncontrolledDropdown,
+    DropdownToggle,
+    DropdownMenu,
+    DropdownItem
 } from 'reactstrap';
 import { logout } from '../modules/authManager';
 import { useState } from "react";
@@ -36,12 +40,6 @@ export default function Header({ isLoggedIn }) {
 
                         {isLoggedIn &&
                             <NavItem>
-                                <NavLink tag={RRNavLink} to="/tag">Tags</NavLink>
-                            </NavItem>
-                        }
-
-                        {isLoggedIn &&
-                            <NavItem>
                                 <NavLink tag={RRNavLink} to="/snipit/create">New SnipIt</NavLink>
                             </NavItem>
                         }
@@ -56,6 +54,20 @@ export default function Header({ isLoggedIn }) {
                             <NavItem>
                                 <NavLink tag={RRNavLink} to="/consoles">Consoles</NavLink>
                             </NavItem>
+                        }
+                        {isLoggedIn &&
+                            <UncontrolledDropdown inNavbar nav>
+                                <DropdownToggle caret nav>Options</DropdownToggle>
+                                <DropdownMenu end>
+                                    <DropdownItem>
+                                        <NavItem tag={RRNavLink} to="/languages">Languages</NavItem>
+                                    </DropdownItem>
+                                    <DropdownItem divider />
+                                    <DropdownItem>
+                                        <NavItem tag={RRNavLink} to="/tags">Tags</NavItem>
+                                    </DropdownItem>
+                                </DropdownMenu>
+                            </UncontrolledDropdown>
                         }
 
                     </Nav>
