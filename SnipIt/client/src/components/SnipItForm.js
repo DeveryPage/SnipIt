@@ -1,6 +1,6 @@
 import React from "react";
 import { useHistory, useParams } from "react-router";
-import { Container } from "reactstrap";
+import { Container, FormGroup, Form, Label, Input, Col, Row, Button } from "reactstrap";
 import { addSnipIt, deleteSnipIt, getSnipIt, updateSnipIt } from "../modules/snipItManager";
 import { useState } from "react";
 
@@ -45,38 +45,56 @@ const SnipItForm = () => {
 
     return (
         <div>
-            <h2>SnipIt</h2>
             <div className="container-5">
                 <div className="form-group">
-                    <form>
-                        <label htmlFor="title">Title</label>
-                        <input type="text" className="form-control" id="title" placeholder="Title" value={snipit.title} onChange={handleInput} required />
+                    <Form>
+                        <FormGroup row>
+                            <Row>
+                                <Col
+                                    className="bg-light border"
+                                    md={{
+                                        offset: 3,
+                                        size: 6
+                                    }}
+                                    sm="12"
+                                >
+                                    <h3>Create A SnipIt</h3>
+                                    <Label htmlFor="title">Title</Label>
+                                    <Input type="text" className="form-control" id="title" placeholder="Ex: My first querey" value={snipit.title} onChange={handleInput} required />
 
-                        <label htmlFor="caption">Caption</label>
-                        <input type="text" className="form-control" id="caption" placeholder="Caption" value={snipit.caption} onChange={handleInput} required />
+                                    <Label htmlFor="caption">Caption</Label>
+                                    <Col sm={10}>
+                                        <Input type="text" className="form-control" id="caption" placeholder="Ex: my first querey took so long to create." value={snipit.caption} onChange={handleInput} required />
+                                    </Col>
 
-                        <label htmlFor="snip">Snip</label>
-                        <textarea type="text" className="form-control" id="snip" placeholder="Snip" value={snipit.snip} onChange={handleInput} required />
+                                    <Col sm={80}>
+                                        <Label htmlFor="snip">Snip</Label>
+                                        <Input type="textarea" className="form-control" id="snip" placeholder="Ex: Select MyfirstQuerey
+                                                                                                      From myquerey
+                                                                                                        Where MyQId = Id"
+                                            value={snipit.snip} onChange={handleInput} required />
+                                    </Col>
 
-                        <label htmlFor="languageId">Language</label>
-                        <input type="text" className="form-control" id="languageId" placeholder="languageId" value={snipit.languageId} onChange={handleInput} required />
-                    </form>
+                                    <Label htmlFor="languageId">Language</Label>
+                                    <Input type="text" className="form-control" id="languageId" placeholder="languageId" value={snipit.languageId} onChange={handleInput} required />
+                                </Col>
+                            </Row>
+                        </FormGroup>
+                        {snipitId.id ?
+                            <div>
+                                <Button type="submit" onClick={event => {
+                                    handleClickUpdateSnipIt()
+                                }}>Update</Button>
+                                <Button type="submit" onClick={event => {
+                                    handleClickCancel()
+                                }}>Cancel</Button>
+                            </div>
+                            :
+                            <Button type="submit" onClick={event => {
+                                handleCreateSnipit()
+                            }}>Submit</Button>}
+                    </Form>
                 </div>
-                {snipitId.id ?
-                    <div>
-                        <button type="submit" onClick={event => {
-                            handleClickUpdateSnipIt()
-                        }}>Update</button>
-
-                        <button type="cancel" onClick={event => {
-                            handleClickCancel()
-                        }}>Cancel</button>
-
-                    </div>
-                    :
-                    <button type="submit" onClick={event => {
-                        handleCreateSnipit()
-                    }}>Create</button>}
             </div>
         </div>
     )

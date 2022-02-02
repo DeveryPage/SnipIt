@@ -26,7 +26,7 @@ export default function Header({ isLoggedIn }) {
                 <NavbarBrand tag={RRNavLink} to="/">SnipIt</NavbarBrand>
                 <NavbarToggler onClick={toggle} />
                 <Collapse isOpen={isOpen} navbar>
-                    <Nav className="mr-auto" navbar>
+                    <Nav className="me-auto" navbar>
 
                         {isLoggedIn &&
                             <NavItem>
