@@ -5,6 +5,9 @@ import { addSnipIt, deleteSnipIt, getSnipIt, updateSnipIt } from "../modules/sni
 import { useState } from "react";
 import { getAllLanguages } from "../modules/languageManager";
 import { useEffect } from "react";
+import AceEditor from "react-ace";
+import "ace-builds/src-noconflict/mode-javascript";
+import "ace-builds/src-noconflict/theme-monokai";
 
 const SnipItForm = () => {
 
@@ -45,6 +48,12 @@ const SnipItForm = () => {
         setSnipit(newSnipIt);
     }
 
+    const snipChangeHandler = (value) => {
+        const newSnipit = { ...snipit };
+        newSnipit.snip = value
+        setSnipit(newSnipit);
+    }
+
     const handleCreateSnipit = () => {
         addSnipIt(snipit)
             .then(history.push("/"))
@@ -57,6 +66,11 @@ const SnipItForm = () => {
 
     const handleClickCancel = () => {
         history.push("/")
+    }
+
+    const selectedlanguage = () => {
+        const language = languages.find(l => l.id === snipit.languageId)
+        return language ? language.name : "javascript"
     }
 
     return (
@@ -85,14 +99,11 @@ const SnipItForm = () => {
 
                                     <Col sm={80}>
                                         <Label htmlFor="snip">Snip</Label>
-                                        <Input type="textarea" className="form-control" id="snip" placeholder="Ex: Select MyfirstQuerey
-                                                                                                      From myquerey
-                                                                                                        Where MyQId = Id"
-                                            value={snipit.snip} onChange={handleInput} required />
+                                        <AceEditor onChange={snipChangeHandler} id="snip" required mode={selectedlanguage()} theme="monokai" name="UNIQUE_ID_OF_DIV" editorProps={{ $blockScrolling: true }} />
                                     </Col>
 
                                     <Label htmlFor="languageId">Language</Label>
-                                    <select className="form-control" id="languageId" value={snipit.languageId} onChange={handleInput} required>
+                                    <select className="form-control" id="languageId" onChange={handleInput} required>
                                         <option value="0">Select a Language</option>
                                         {languages.map(l => (
                                             <option key={l.id} value={l.id}>{l.name}</option>
