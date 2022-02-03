@@ -3,6 +3,9 @@ import { Button, Card, CardBody, CardSubtitle, CardText, CardTitle, Col, Row } f
 import { Link } from "react-router-dom";
 import { deleteSnipIt, getAllSnipIts } from "../modules/snipItManager";
 import { useHistory } from "react-router";
+import AceEditor from "react-ace";
+import "ace-builds/src-noconflict/mode-javascript";
+import "ace-builds/src-noconflict/theme-monokai";
 
 export const SnipIt = ({ snipit, setSnipIts }) => {
 
@@ -34,7 +37,7 @@ export const SnipIt = ({ snipit, setSnipIts }) => {
                         </CardSubtitle>
                         <CardTitle tag="h5" >{snipit.title}</CardTitle>
                         <CardSubtitle className="mb-2 text-muted" tag="h6">{snipit.caption}</CardSubtitle>
-                        <CardText>{snipit.snip}</CardText>
+                        <AceEditor mode="javascript" theme="monokai" value={snipit.snip} readOnly />
 
                         <Row >
                             <Col xs="1">
