@@ -29,14 +29,14 @@ export const Language = ({ language, setLanguages }) => {
             <div>
                 <Card body color="light">
                     <CardBody>
-                        <CardSubtitle className="mb-2 text-muted" tag="h6">
+                        <CardTitle className="mb-2 text-muted" tag="h4">
                             {language.name}
-                        </CardSubtitle>
+                        </CardTitle>
 
                         <Row >
-                            <Col xs="1">
+                            {/* <Col xs="1">
                                 <Button onClick={handleClickEditLanguage}>Edit</Button>
-                            </Col>
+                            </Col> */}
 
                             <Col xs="1">
                                 <Button onClick={handleClickDeleteLanguage}>Delete</Button>
