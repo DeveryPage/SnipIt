@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using CodeSnipIt.Models;
+using CodeSnipIt.Repositories;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,36 +14,64 @@ namespace CodeSnipIt.Controllers
     [ApiController]
     public class TagController : ControllerBase
     {
+        private readonly ITagRepository _tagRepository;
+        public TagController(ITagRepository tagRepository)
+        {
+            _tagRepository = tagRepository;
+        }
         // GET: api/<TagController>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IActionResult Get()
         {
-            return new string[] { "value1", "value2" };
+            return Ok(_tagRepository.GetAllTags());
         }
 
         // GET api/<TagController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public IActionResult Get(int id)
         {
-            return "value";
+            var tag = _tagRepository.GetTagById(id);
+            if (tag == null)
+            {
+                return NotFound();
+            }
+            return Ok(tag);
         }
 
         // POST api/<TagController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public IActionResult Post(Tag tag)
         {
+            if (string.IsNullOrWhiteSpace(tag.Name))
+            {
+                tag.Name = null;
+                return NoContent();
+            }
+
+            _tagRepository.Add(tag);
+
+            return CreatedAtAction("Get", new { id = tag.Id }, tag);
         }
 
         // PUT api/<TagController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public IActionResult Put(int id, Tag tag)
         {
+            if (id != tag.Id)
+            {
+                return BadRequest();
+            }
+
+            _tagRepository.Update(tag);
+            return NoContent();
         }
 
         // DELETE api/<TagController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public IActionResult Delete(int id)
         {
+            _tagRepository.Delete(id);
+            return NoContent();
         }
     }
 }
