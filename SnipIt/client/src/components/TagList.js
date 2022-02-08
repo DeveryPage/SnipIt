@@ -25,10 +25,10 @@ const TagList = () => {
         <div className="Container">
             <div className="row justify-content-center">
                 {tags.map((tag) => (
-                    <>
-                        <Tag tag={tag} key={tag.id} setTags={setTags} />
 
-                    </>
+                    <Tag tag={tag} key={tag.id} setTags={setTags} />
+
+
                 ))}
                 <Button onClick={handleClickTagForm}>Add A Tag </Button>
             </div>

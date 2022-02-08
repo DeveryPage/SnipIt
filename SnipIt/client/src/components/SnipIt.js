@@ -6,6 +6,7 @@ import { useHistory } from "react-router";
 import AceEditor from "react-ace";
 import "ace-builds/src-noconflict/mode-javascript";
 import "ace-builds/src-noconflict/theme-monokai";
+import { useState } from "react";
 
 export const SnipIt = ({ snipit, setSnipIts }) => {
 
@@ -37,7 +38,7 @@ export const SnipIt = ({ snipit, setSnipIts }) => {
                         </CardSubtitle>
                         <CardTitle tag="h5" >{snipit.title}</CardTitle>
                         <CardSubtitle className="mb-2 text-muted" tag="h6">{snipit.caption}</CardSubtitle>
-                        <AceEditor mode="javascript" theme="monokai" value={snipit.snip} readOnly />
+                        <AceEditor setOptions={{ useWorker: false }} mode="javascript" theme="monokai" value={snipit.snip} readOnly />
 
                         <Row >
                             <Col xs="1">
@@ -54,3 +55,5 @@ export const SnipIt = ({ snipit, setSnipIts }) => {
         </>
     )
 }
+
+// disabled={user.id === snipit.userId ? true : false}

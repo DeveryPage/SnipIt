@@ -132,7 +132,7 @@ namespace CodeSnipIt.Repositories
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"INSERT INTO UserProfile (FirebaseUserId, DisplayName, 
-                                                                 Email, CreateDateTime,)
+                                                                 Email, CreateDateTime)
                                         OUTPUT INSERTED.ID
                                         VALUES (@FirebaseUserId, @DisplayName, 
                                                 @Email, @CreateDateTime)";

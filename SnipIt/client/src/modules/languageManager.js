@@ -52,7 +52,7 @@ export const updateLanguage = (language) => {
                 Authorization: `Bearer ${token}`
             },
             body: JSON.stringify(language),
-        }).then(getAllLanguages());
+        })
     })
 }
 
@@ -65,6 +65,6 @@ export const addLanguage = (language) => {
                 Authorization: `Bearer ${token}`,
             },
             body: JSON.stringify(language),
-        }).then(res => res.json());
+        })
     })
 }

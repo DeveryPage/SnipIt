@@ -32,6 +32,7 @@ namespace CodeSnipIt.Controllers
         [HttpGet]
         public IActionResult Get()
         {
+            var id = GetCurrentUserProfileId();
             return Ok(_snipRepo.GetAllSnipIts());
         }
 
@@ -108,5 +109,9 @@ namespace CodeSnipIt.Controllers
             }
             return null;
         }
+
+
+
+
     }
 }
