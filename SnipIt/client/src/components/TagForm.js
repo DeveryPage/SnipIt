@@ -32,12 +32,12 @@ const TagForm = () => {
 
     const handleCreateTag = () => {
         addTag(tag)
-            .then(history.push("/tags"))
+            .then(() => history.push("/tags"))
     }
 
     const handleClickUpdateTag = () => {
         updateTag(tag)
-            .then(history.push("/tags"))
+            .then(() => history.push("/tags"))
     }
 
     const handleClickCancel = () => {

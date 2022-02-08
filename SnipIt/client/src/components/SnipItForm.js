@@ -13,6 +13,8 @@ const SnipItForm = () => {
 
     const [snipit, setSnipit] = useState({
         title: "",
+        caption: "",
+        snip: ""
     })
 
 
@@ -40,6 +42,8 @@ const SnipItForm = () => {
                 delete snipitCopy.userprofile
                 setSnipit(snipitCopy)
             });
+    } else {
+
     }
 
     const handleInput = (event) => {
@@ -54,12 +58,14 @@ const SnipItForm = () => {
         setSnipit(newSnipit);
     }
 
-    const handleCreateSnipit = () => {
+    const handleCreateSnipit = (event) => {
+        event.preventDefault()
         addSnipIt(snipit)
             .then(history.push("/"))
     }
 
-    const handleClickUpdateSnipIt = () => {
+    const handleClickUpdateSnipIt = (event) => {
+        event.preventDefault()
         updateSnipIt(snipit)
             .then(history.push("/"))
     }
@@ -72,6 +78,7 @@ const SnipItForm = () => {
         const language = languages.find(l => l.id === snipit.languageId)
         return language ? language.name : "javascript"
     }
+
 
     return (
         <div>
@@ -99,7 +106,7 @@ const SnipItForm = () => {
 
                                     <Col sm={80}>
                                         <Label htmlFor="snip">Snip</Label>
-                                        <AceEditor onChange={snipChangeHandler} id="snip" required mode={selectedlanguage()} theme="monokai" name="UNIQUE_ID_OF_DIV" editorProps={{ $blockScrolling: true }} />
+                                        <AceEditor setOptions={{ useWorker: false }} onChange={snipChangeHandler} id="snip" required mode={selectedlanguage()} value={snipit.snip} theme="monokai" name="UNIQUE_ID_OF_DIV" editorProps={{ $blockScrolling: true }} />
                                     </Col>
 
                                     <Label htmlFor="languageId">Language</Label>
@@ -115,7 +122,7 @@ const SnipItForm = () => {
                         {snipitId.id ?
                             <div>
                                 <Button type="submit" onClick={event => {
-                                    handleClickUpdateSnipIt()
+                                    handleClickUpdateSnipIt(event)
                                 }}>Update</Button>
                                 <Button type="submit" onClick={event => {
                                     handleClickCancel()
@@ -123,7 +130,7 @@ const SnipItForm = () => {
                             </div>
                             :
                             <Button type="submit" onClick={event => {
-                                handleCreateSnipit()
+                                handleCreateSnipit(event)
                             }}>Submit</Button>}
                     </Form>
                 </div>

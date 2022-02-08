@@ -8,7 +8,7 @@ namespace CodeSnipIt.Models
 {
     public class UserProfile
     {
-        public int Id { get; set; }
+        public int? Id { get; set; }
 
 
         [StringLength(28, MinimumLength = 28)]

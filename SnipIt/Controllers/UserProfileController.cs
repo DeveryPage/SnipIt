@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Security.Claims;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -38,10 +39,11 @@ namespace CodeSnipIt.Controllers
 
 
         //Get by Id
-        [HttpGet("{id}")]
-        public IActionResult GetUserProfileById(int id)
+
+        [HttpGet("GetCurrentUser")]
+        public IActionResult GetUserProfileById()
         {
-            return Ok(_userProfileRepository.GetUserProfileById(id));
+            return Ok(GetCurrentUserProfile());
         }
 
 
@@ -75,6 +77,12 @@ namespace CodeSnipIt.Controllers
                 nameof(GetUserProfile),
                 new { firebaseUserId = userProfile.FirebaseUserId },
                 userProfile);
+        }
+
+        private UserProfile GetCurrentUserProfile()
+        {
+            var firebaseUserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            return _userProfileRepository.GetByFirebaseUserId(firebaseUserId);
         }
     }
 }

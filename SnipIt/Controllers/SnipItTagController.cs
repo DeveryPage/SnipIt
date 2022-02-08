@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using CodeSnipIt.Models;
+using CodeSnipIt.Repositories;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,36 +14,63 @@ namespace CodeSnipIt.Controllers
     [ApiController]
     public class SnipItTagController : ControllerBase
     {
-        // GET: api/<SnipItTagController>
-        [HttpGet]
-        public IEnumerable<string> Get()
+        private readonly ISnipItTagRepository _stRepo;
+
+        public SnipItTagController(ISnipItTagRepository snipItTagRepository)
         {
-            return new string[] { "value1", "value2" };
+            _stRepo = snipItTagRepository;
         }
 
-        // GET api/<SnipItTagController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        // GET: api/<SnipItTagController>
+        [HttpGet("{snipItId}")]
+        public IActionResult Get(int snipItId)
         {
-            return "value";
+            try
+            {
+                var snipItTags = _stRepo.Get(snipItId);
+                return Ok(snipItTags);
+            }
+            catch
+            {
+                return NoContent();
+            }
         }
+
 
         // POST api/<SnipItTagController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public IActionResult Update(SnipItTag snipItTag)
         {
+            var snipItTags = _stRepo.Get(snipItTag.SnipItId);
+            if (snipItTags.Any(tag => tag.TagId == snipItTag.TagId))
+                try
+                {
+                    _stRepo.Delete(snipItTag);
+                    return Ok(_stRepo.Get(snipItTag.SnipItId));
+                }
+                catch
+                {
+                    return BadRequest();
+                }
+            else
+                try
+                {
+                    _stRepo.Add(snipItTag);
+                    return Ok(_stRepo.Get(snipItTag.SnipItId));
+                }
+                catch
+                {
+                    return BadRequest();
+                }
         }
 
-        // PUT api/<SnipItTagController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
 
         // DELETE api/<SnipItTagController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public IActionResult Delete(SnipItTag snipItTag)
         {
+            _stRepo.Delete(snipItTag);
+            return NoContent();
         }
     }
 }

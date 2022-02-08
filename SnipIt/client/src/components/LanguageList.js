@@ -26,10 +26,10 @@ const LanguageList = () => {
         <div className="Container">
             <div className="row justify-content-center">
                 {languages.map((language) => (
-                    <>
-                        <Language language={language} key={language.id} setLanguages={setLanguages} />
 
-                    </>
+                    <Language language={language} key={language.id} setLanguages={setLanguages} />
+
+
                 ))}
                 <Button onClick={handleClickLanguageForm}>Add A Language </Button>
             </div>

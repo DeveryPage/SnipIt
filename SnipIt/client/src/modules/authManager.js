@@ -35,7 +35,22 @@ export const getToken = () => {
     return currentUser.getIdToken();
 };
 
-
+export const getCurrentUser = () => {
+    return getToken().then((token) => {
+        fetch(`${_apiUrl}/GetCurrentUser`, {
+            method: "GET",
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        }).then(resp => {
+            if (resp.ok) {
+                return resp.json();
+            } else {
+                throw new Error("An unknown error occurred while trying to get snipIts.")
+            }
+        })
+    })
+}
 
 export const login = (email, pw) => {
     return firebase.auth().signInWithEmailAndPassword(email, pw)

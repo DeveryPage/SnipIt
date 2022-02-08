@@ -30,12 +30,12 @@ const LanguageForm = () => {
 
     const handleCreateLanguage = () => {
         addLanguage(language)
-            .then(history.push("/languages"))
+            .then(() => history.push("/languages"))
     }
 
     const handleClickUpdateLanguage = () => {
         updateLanguage(language)
-            .then(history.push("/languages"))
+            .then(() => history.push("/languages"))
     }
 
     const handleClickCancel = () => {
