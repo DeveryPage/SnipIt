@@ -38,25 +38,25 @@ namespace CodeSnipIt.Controllers
 
 
         // POST api/<SnipItTagController>
-        [HttpPost]
-        public IActionResult Update(SnipItTag snipItTag)
+        [HttpPost("{id}")]
+        public IActionResult Update(int id, List<int> selectedTagIds)
         {
-            var snipItTags = _stRepo.Get(snipItTag.SnipItId);
-            if (snipItTags.Any(tag => tag.TagId == snipItTag.TagId))
                 try
                 {
-                    _stRepo.Delete(snipItTag);
-                    return Ok(_stRepo.Get(snipItTag.SnipItId));
-                }
-                catch
+                    _stRepo.DeleteBySnipItId(id);
+                foreach(var selectedTagId in selectedTagIds)
                 {
-                    return BadRequest();
+                    if (selectedTagId != 0)
+                    {
+                        var snipItTag = new SnipItTag
+                        {
+                            SnipItId = id,
+                            TagId = selectedTagId
+                        };
+                        _stRepo.Add(snipItTag);
+                    }
                 }
-            else
-                try
-                {
-                    _stRepo.Add(snipItTag);
-                    return Ok(_stRepo.Get(snipItTag.SnipItId));
+                    return NoContent();
                 }
                 catch
                 {
@@ -67,9 +67,9 @@ namespace CodeSnipIt.Controllers
 
         // DELETE api/<SnipItTagController>/5
         [HttpDelete("{id}")]
-        public IActionResult Delete(SnipItTag snipItTag)
+        public IActionResult Delete(int id)
         {
-            _stRepo.Delete(snipItTag);
+            _stRepo.DeleteBySnipItId(id);
             return NoContent();
         }
     }

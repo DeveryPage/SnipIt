@@ -63,7 +63,7 @@ namespace CodeSnipIt.Repositories
             }
         }
 
-        public void Delete(SnipItTag snipItTag)
+        public void DeleteBySnipItId(int snipItId)
         {
             using (var conn = Connection)
             {
@@ -71,13 +71,14 @@ namespace CodeSnipIt.Repositories
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"Delete From SnipItTag
-                                        Where SnipItId = @snipItId AND TagId = @tagId";
-                    DbUtils.AddParameter(cmd, "@snipItId", snipItTag.SnipItId);
-                    DbUtils.AddParameter(cmd, "@tagId", snipItTag.TagId);
+                                        Where SnipItId = @snipItId";
+                    DbUtils.AddParameter(cmd, "@snipItId", snipItId);
 
                     cmd.ExecuteNonQuery();
                 }
             }
         }
+
+
     }
 }

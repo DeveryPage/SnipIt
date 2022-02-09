@@ -52,7 +52,7 @@ export const updateSnipIt = (snipit) => {
                 Authorization: `Bearer ${token}`
             },
             body: JSON.stringify(snipit),
-        }).then(getAllSnipIts());
+        })
     })
 }
 

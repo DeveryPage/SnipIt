@@ -9,7 +9,7 @@ import "ace-builds/src-noconflict/theme-monokai";
 import { useState } from "react";
 
 export const SnipIt = ({ snipit, setSnipIts }) => {
-
+    const [snipIt, setSnipIt] = useState([])
     const history = useHistory();
 
     const handleClickDeleteSnipIt = () => {
@@ -39,6 +39,13 @@ export const SnipIt = ({ snipit, setSnipIts }) => {
                         <CardTitle tag="h5" >{snipit.title}</CardTitle>
                         <CardSubtitle className="mb-2 text-muted" tag="h6">{snipit.caption}</CardSubtitle>
                         <AceEditor setOptions={{ useWorker: false }} mode="javascript" theme="monokai" value={snipit.snip} readOnly />
+                        <Col xs="1">
+                            <ul>
+                                {snipIt.tag != null
+                                    ? snipIt.tag.map((t) => <li>{t.name}</li>)
+                                    : null}
+                            </ul>
+                        </Col>
 
                         <Row >
                             <Col xs="1">
