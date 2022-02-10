@@ -80,6 +80,11 @@ namespace CodeSnipIt.Controllers
             {
                 return BadRequest();
             }
+            var snip = _snipRepo.GetSnipItById(id);
+            if (snip.UserProfileId != GetCurrentUserProfileId())
+            {
+                return Forbid();
+            }
 
             _snipRepo.Update(snipit);
             return NoContent();
@@ -90,6 +95,11 @@ namespace CodeSnipIt.Controllers
         [Authorize]
         public IActionResult Delete(int id)
         {
+            var snip = _snipRepo.GetSnipItById(id);
+            if (snip.UserProfileId != GetCurrentUserProfileId())
+            {
+                return Forbid();
+            }
             _snipRepo.Delete(id);
             return NoContent();
         }

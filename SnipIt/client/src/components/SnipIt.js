@@ -1,16 +1,21 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Button, Card, CardBody, CardSubtitle, CardText, CardTitle, Col, Row } from "reactstrap";
 import { Link } from "react-router-dom";
 import { deleteSnipIt, getAllSnipIts } from "../modules/snipItManager";
-import { useHistory } from "react-router";
+import { useHistory, useParams } from "react-router";
 import AceEditor from "react-ace";
 import "ace-builds/src-noconflict/mode-javascript";
 import "ace-builds/src-noconflict/theme-monokai";
 import { useState } from "react";
+import { _getUserData } from "../modules/authManager";
 
-export const SnipIt = ({ snipit, setSnipIts }) => {
+export const SnipIt = ({ snipit, setSnipIts, user }) => {
     const [snipIt, setSnipIt] = useState([])
+
+    const { userProfileId } = useParams();
+
     const history = useHistory();
+
 
     const handleClickDeleteSnipIt = () => {
         const confirm = window.confirm("Are you sure you would like to delete this SnipIt?")
@@ -25,7 +30,12 @@ export const SnipIt = ({ snipit, setSnipIts }) => {
     }
 
     const handleClickEditSnip = () => {
+
         history.push(`/snipit/create/${snipit.id}`)
+    }
+
+    const isOwner = () => {
+        return user?.id === snipit.userProfileId
     }
 
     return (
@@ -48,13 +58,17 @@ export const SnipIt = ({ snipit, setSnipIts }) => {
                         </Col>
 
                         <Row >
-                            <Col xs="1">
-                                <Button onClick={handleClickEditSnip}>Edit</Button>
-                            </Col>
+                            {
+                                isOwner() ? <>
+                                    <Col xs="1">
+                                        <Button onClick={handleClickEditSnip}>Edit</Button>
+                                    </Col>
 
-                            <Col xs="1">
-                                <Button onClick={handleClickDeleteSnipIt}>Delete</Button>
-                            </Col>
+                                    <Col xs="1">
+                                        <Button onClick={handleClickDeleteSnipIt}>Delete</Button>
+                                    </Col>
+                                </> : null
+                            }
                         </Row>
                     </CardBody>
                 </Card>

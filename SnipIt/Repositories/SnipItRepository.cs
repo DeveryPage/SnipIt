@@ -20,8 +20,8 @@ namespace CodeSnipIt.Repositories
                 conn.Open();
                 using (var cmd = conn.CreateCommand())
                 {
-                    cmd.CommandText = @"Select s.Id, s.Title, s.Caption, s.Snip, s.LanguageId,
-	                                           s.UserProfileId, s.CreateDateTime, 
+                    cmd.CommandText = @"Select s.Id, s.Title, s.Caption, s.Snip, s.LanguageId as LanguageId,
+	                                           s.UserProfileId as UserProfileId, s.CreateDateTime, 
 	                                           up.DisplayName, l.Name
                                         From SnipIt s
                                         Join UserProfile up on s.UserProfileId = up.Id 
@@ -39,8 +39,8 @@ namespace CodeSnipIt.Repositories
                                 Title = DbUtils.GetString(reader, "Title"),
                                 Caption = DbUtils.GetString(reader, "Caption"),
                                 Snip = DbUtils.GetString(reader, "Snip"),
-                                LanguageId = DbUtils.GetInt(reader, "Id"),
-                                UserProfileId = DbUtils.GetInt(reader, "Id"),
+                                LanguageId = DbUtils.GetInt(reader, "LanguageId"),
+                                UserProfileId = DbUtils.GetInt(reader, "UserProfileId"),
                                 CreateDateTime = DbUtils.GetDateTime(reader, "CreateDateTime"),
 
                                 Language = new Language
@@ -150,6 +150,7 @@ namespace CodeSnipIt.Repositories
                                 Title = DbUtils.GetString(reader, "Title"),
                                 Caption = DbUtils.GetString(reader, "Caption"),
                                 Snip = DbUtils.GetString(reader, "Snip"),
+                                UserProfileId = DbUtils.GetInt(reader, "UserProfileId"),
 
                                 Language = new Language()
                                 {
