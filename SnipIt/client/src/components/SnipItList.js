@@ -13,12 +13,13 @@ const SnipItList = () => {
     };
 
     const getUserById = () => {
-        getCurrentUser().then(user => setUser(user));
+        return getCurrentUser().then(user => {
+            setUser(user)
+        });
     }
 
     useEffect(() => {
-        getSnipIts();
-        getUserById();
+        getUserById().then(() => getSnipIts());
     }, []);
 
     return (
@@ -26,7 +27,7 @@ const SnipItList = () => {
             <div className="row justify-content-center">
                 {snipits.map((snipit) => (
 
-                    <SnipIt snipit={snipit} key={snipit.id} setSnipIts={setSnipIts} />
+                    <SnipIt snipit={snipit} key={snipit.id} setSnipIts={setSnipIts} user={user} />
 
 
                 ))}

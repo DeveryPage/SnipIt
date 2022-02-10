@@ -26,6 +26,17 @@ const _saveUser = (userProfile) => {
         }).then(resp => resp.json()));
 };
 
+export const _getUserData = () => {
+    return getToken().then((token) => {
+        return fetch(`${_apiUrl}`, {
+            method: "GET",
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        }).then(resp => resp.json())
+    });
+}
+
 
 export const getToken = () => {
     const currentUser = firebase.auth().currentUser;
@@ -37,7 +48,7 @@ export const getToken = () => {
 
 export const getCurrentUser = () => {
     return getToken().then((token) => {
-        fetch(`${_apiUrl}/GetCurrentUser`, {
+        return fetch(`${_apiUrl}/GetCurrentUser`, {
             method: "GET",
             headers: {
                 Authorization: `Bearer ${token}`

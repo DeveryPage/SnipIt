@@ -8,48 +8,70 @@ import { useEffect } from "react";
 import AceEditor from "react-ace";
 import "ace-builds/src-noconflict/mode-javascript";
 import "ace-builds/src-noconflict/theme-monokai";
+import { getAllTags } from "../modules/tagManager";
+import { getSnipItTags, getSnipItTagsBySnipItId, updateSnipItTags } from "../modules/snipItTagManager";
 
 const SnipItForm = () => {
 
     const [snipit, setSnipit] = useState({
         title: "",
         caption: "",
-        snip: ""
+        snip: "",
+        tag: ""
     })
-
-
-
     const [languages, setLanguages] = useState([])
+    const [tags, setTags] = useState([])
+    const [selectedTagIds, setSelectedTags] = useState([])
 
     const snipitId = useParams();
-
     const history = useHistory();
 
     const getLanguages = () => {
         getAllLanguages().then(languages => setLanguages(languages))
     }
 
+    const getTags = () => {
+        getAllTags().then(tags => setTags(tags))
+    }
+
+    const getSnipItTagsById = (id) => {
+        getSnipItTags(id).then(snipItTags => {
+            setSelectedTags(snipItTags.map((snipItTag) => {
+                return snipItTag.tagId
+            }))
+        })
+    }
+
     useEffect(() => {
+        getTags()
         getLanguages();
+
+        if (snipitId.id && snipit.title === "") {
+            getSnipIt(snipitId.id)
+                .then(snipit => {
+                    const snipitCopy = { ...snipit }
+                    delete snipitCopy.userprofile
+                    setSnipit(snipitCopy)
+                });
+            getSnipItTagsById(snipitId.id)
+        }
     }, []);
 
 
 
-    if (snipitId.id && snipit.title === "") {
-        getSnipIt(snipitId.id)
-            .then(snipit => {
-                const snipitCopy = { ...snipit }
-                delete snipitCopy.userprofile
-                setSnipit(snipitCopy)
-            });
-    } else {
-
-    }
 
     const handleInput = (event) => {
         const newSnipIt = { ...snipit };
         newSnipIt[event.target.id] = event.target.value;
         setSnipit(newSnipIt);
+    }
+
+    const handleMultiSelect = event => {
+        const tagsToSelect = []
+        for (let i = 0; i < event.target.selectedOptions.length; i++) {
+            tagsToSelect.push(parseInt(event.target.selectedOptions[i].value))
+        }
+        setSelectedTags(tagsToSelect);
     }
 
     const snipChangeHandler = (value) => {
@@ -61,13 +83,21 @@ const SnipItForm = () => {
     const handleCreateSnipit = (event) => {
         event.preventDefault()
         addSnipIt(snipit)
-            .then(history.push("/"))
+            .then((snipit) => {
+                const snipitId = snipit.id
+                updateSnipItTags(snipitId, selectedTagIds)
+                    .then(history.push("/"))
+            })
     }
 
     const handleClickUpdateSnipIt = (event) => {
         event.preventDefault()
         updateSnipIt(snipit)
-            .then(history.push("/"))
+            .then(() => {
+                const snipitId = snipit.id
+                updateSnipItTags(snipitId, selectedTagIds)
+                    .then(history.push("/"))
+            })
     }
 
     const handleClickCancel = () => {
@@ -116,6 +146,13 @@ const SnipItForm = () => {
                                             <option key={l.id} value={l.id}>{l.name}</option>
                                         ))}
                                     </select>
+
+                                    <div className="formgroup">
+                                        <select multiple type="text" id="tag" onChange={handleMultiSelect} value={selectedTagIds} required autoFocus className="form-control"> <option value="0">Assign Tags </option>
+                                            {tags.map(t => (
+                                                <option key={t.id} value={t.id}>{t.name}</option>
+                                            ))}</select></div>
+
                                 </Col>
                             </Row>
                         </FormGroup>
